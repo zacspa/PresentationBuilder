@@ -2,7 +2,7 @@
 
 A Claude Code plugin for building native SwiftUI macOS presentation apps that replace slide decks with live, animated, interactive experiences.
 
-<video src="media/demo.mp4" autoplay loop muted playsinline></video>
+<video src="https://raw.githubusercontent.com/zacspa/PresentationBuilder/main/media/demo.mp4" autoplay loop muted playsinline></video>
 
 ## What it does
 
