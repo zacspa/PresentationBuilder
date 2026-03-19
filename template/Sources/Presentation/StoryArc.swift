@@ -10,20 +10,16 @@ struct TimeBudget {
 }
 
 // MARK: - Story Arc
-//
-// The single authoring surface for the presentation.
-// Add, remove, or reorder slides by editing this array.
-// Everything else (canvas, narrative, scrubber) derives from this.
 
 enum StoryArc {
 
-    // Per-slide time budgets, linearly interpolated from act boundaries.
-    // Edit the acts array to define your presentation's pacing.
     static let timeBudgets: [TimeBudget] = {
         let acts: [(act: Int, title: String, start: TimeInterval, end: TimeInterval, count: Int)] = [
-            (1, "Opening",      0 * 60,  5 * 60, 2),  // 5 min, 2 slides
-            (2, "Core Content", 5 * 60, 20 * 60, 3),  // 15 min, 3 slides
-            (3, "Close",       20 * 60, 25 * 60, 2),  // 5 min, 2 slides
+            (1, "Opening",      0 * 60,  2 * 60, 1),  // 2 min, 1 slide
+            (2, "Canvas",       2 * 60,  5 * 60, 1),  // 3 min, 1 slide
+            (3, "Animations",   5 * 60,  9 * 60, 2),  // 4 min, 2 slides
+            (4, "Interactive",  9 * 60, 12 * 60, 2),  // 3 min, 2 slides
+            (5, "Close",       12 * 60, 13 * 60, 1),  // 1 min, 1 slide
         ]
         var budgets: [TimeBudget] = []
         for act in acts {
@@ -44,97 +40,111 @@ enum StoryArc {
     static let slides: [SlideDescriptor] = [
 
         // ═══════════════════════════════════════════════════════════
-        // ACT 1: OPENING (0:00–5:00)
+        // ACT 1: OPENING (0:00–2:00)
         // ═══════════════════════════════════════════════════════════
 
         SlideDescriptor(
             id: "title",
             shortTitle: "Title",
-            narrativeTitle: "Your Presentation Title",
+            narrativeTitle: "SwiftUI: Beyond Static Slides",
             narrativeBullets: [
-                "Subtitle or tagline",
-                "Your Name",
+                "Every slide is a live SwiftUI animation",
+                "The presentation framework IS the demo",
             ],
             stageContent: .scene(.titleCard),
-            presenterNotes: "Breathe. Make eye contact. Let the title sit for a beat."
-        ),
-        SlideDescriptor(
-            id: "overview",
-            shortTitle: "Overview",
-            narrativeTitle: "The Problem",
-            narrativeBullets: [
-                "What problem existed?",
-                "Why did it matter?",
-                "What was the cost of inaction?",
-            ],
-            stageContent: .scene(.overview),
-            presenterNotes: "Set the scene. Make the audience feel the pain."
+            presenterNotes: "Let the sparkle icon animate in. Pause for effect — the audience sees the spring entry live."
         ),
 
         // ═══════════════════════════════════════════════════════════
-        // ACT 2: CORE CONTENT (5:00–20:00)
+        // ACT 2: CANVAS (2:00–5:00)
         // ═══════════════════════════════════════════════════════════
 
         SlideDescriptor(
-            id: "architecture",
-            shortTitle: "Architecture",
-            narrativeTitle: "How It Works",
+            id: "canvas",
+            shortTitle: "Canvas",
+            narrativeTitle: "The Persistent Canvas",
             narrativeBullets: [
-                "High-level architecture",
-                "Key components and their roles",
-                "Data flow through the system",
+                "Elements live across slides — never recreated",
+                "Step 1: horizontal row",
+                "Step 2: vertical stack — same views, new positions",
+                "Step 3: rotation + blur — still the same views!",
             ],
-            stageContent: .scene(.architecture),
-            presenterNotes: "Walk through the diagram. Point to each component as you explain it."
-        ),
-        SlideDescriptor(
-            id: "key-decision",
-            shortTitle: "Decisions",
-            narrativeTitle: "Key Technical Decisions",
-            narrativeBullets: [
-                "What trade-offs did you face?",
-                "What did you choose and why?",
-                "What was the result?",
-            ],
-            stageContent: .scene(.keyDecision)
-        ),
-        SlideDescriptor(
-            id: "demo",
-            shortTitle: "Demo",
-            narrativeTitle: "Live Demo",
-            narrativeBullets: [
-                "What you're about to see",
-                "What to watch for",
-            ],
-            stageContent: .takeover(.interactiveDemo),
-            presenterNotes: "Keep it short. Show, don't tell."
+            stageContent: .scenes([.canvasIntro, .canvasMove, .canvasTransform]),
+            presenterNotes: "Advance slowly through each step. Point out that the boxes are the SAME SwiftUI views — no destroy/recreate."
         ),
 
         // ═══════════════════════════════════════════════════════════
-        // ACT 3: CLOSE (20:00–25:00)
+        // ACT 3: ANIMATIONS (5:00–9:00)
         // ═══════════════════════════════════════════════════════════
 
         SlideDescriptor(
-            id: "impact",
-            shortTitle: "Impact",
-            narrativeTitle: "Impact",
+            id: "morph",
+            shortTitle: "Morph",
+            narrativeTitle: "Morphing Layouts",
             narrativeBullets: [
-                "Metric 1: before vs after",
-                "Metric 2: before vs after",
-                "What it unlocked for the team/org",
+                "6 colored nodes rearrange with staggered springs",
+                "Grid → circle → tree — all animated",
+                "matchedGeometryEffect-style fluidity, zero boilerplate",
             ],
-            stageContent: .scene(.impact)
+            stageContent: .scenes([.layoutGrid, .layoutCircle, .layoutTree]),
+            presenterNotes: "Each step morphs all 6 nodes. Emphasize zero boilerplate — just declare positions."
         ),
+        SlideDescriptor(
+            id: "orbiter",
+            shortTitle: "Orbiter",
+            narrativeTitle: "Continuous Animation",
+            narrativeBullets: [
+                "TimelineView + Canvas = 60fps particle orbiter",
+                "8 hue-cycling particles with motion trails",
+                "Runs alongside the persistent canvas",
+            ],
+            stageContent: .scene(.animationShowcase),
+            presenterNotes: "This animates at 60fps without blocking navigation. Point out hue cycling and trail effects."
+        ),
+
+        // ═══════════════════════════════════════════════════════════
+        // ACT 4: INTERACTIVE (9:00–12:00)
+        // ═══════════════════════════════════════════════════════════
+
+        SlideDescriptor(
+            id: "focus",
+            shortTitle: "Focus",
+            narrativeTitle: "Focus & Blur",
+            narrativeBullets: [
+                "4 feature cards in a grid",
+                "Each card zooms in one at a time while others blur",
+                "Then all cards return — same persistent elements",
+            ],
+            stageContent: .scenes([.focusAll, .focusCanvas, .focusMorph, .focusAnimation, .focusInteractive, .focusAllReturn]),
+            presenterNotes: "Advance through each card. The audience sees each feature highlighted, then the full grid returns."
+        ),
+        SlideDescriptor(
+            id: "playground",
+            shortTitle: "Particles",
+            narrativeTitle: "Interactive Playground",
+            narrativeBullets: [
+                "150 particles following the mouse at 60fps",
+                "Click to pin attractor points",
+                "Full takeover — replaces the canvas entirely",
+            ],
+            stageContent: .takeover(.particlePlayground),
+            presenterNotes: "Move the mouse around. Click a few times to create attractors. Let the audience play with it."
+        ),
+
+        // ═══════════════════════════════════════════════════════════
+        // ACT 5: CLOSE (12:00–13:00)
+        // ═══════════════════════════════════════════════════════════
+
         SlideDescriptor(
             id: "closing",
-            shortTitle: "Q&A",
-            narrativeTitle: "Questions?",
+            shortTitle: "Close",
+            narrativeTitle: "Thank You",
             narrativeBullets: [
-                "Your Presentation Title",
-                "Your Name",
+                "The sparkle icon returns — persistent canvas brought it back",
+                "Every animation you saw was SwiftUI, live",
             ],
             stageContent: .scene(.closingCard),
-            presenterNotes: "Pause. Let the audience come to you."
+            presenterNotes: "The icon-hero reappears from the title card. Let it land — same element, full circle."
         ),
     ]
 }

@@ -100,12 +100,23 @@ enum SceneID: String, CaseIterable, Equatable, Hashable {
     // -- Bookend slides --
     case titleCard
     case closingCard
-    // -- Content slides (add yours here) --
-    case overview
-    case architecture
-    case keyDecision
-    case demo
-    case impact
+    // -- Canvas demo (slide 2) --
+    case canvasIntro
+    case canvasMove
+    case canvasTransform
+    // -- Morphing layouts (slide 3) --
+    case layoutGrid
+    case layoutCircle
+    case layoutTree
+    // -- Continuous animation (slide 4) --
+    case animationShowcase
+    // -- Focus & blur (slide 5) --
+    case focusAll
+    case focusCanvas
+    case focusMorph
+    case focusAnimation
+    case focusInteractive
+    case focusAllReturn
 }
 
 // MARK: - Element State
@@ -138,7 +149,6 @@ typealias SceneSnapshot = [String: ElementState]
 // MARK: - Takeover Type
 
 /// Interactive overlays that replace the persistent canvas.
-/// Add your own takeover types here (live demos, comparisons, etc.)
 enum TakeoverType {
-    case interactiveDemo
+    case particlePlayground
 }
