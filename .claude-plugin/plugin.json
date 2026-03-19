@@ -1,0 +1,15 @@
+{
+  "name": "presentation-builder",
+  "version": "1.0.0",
+  "description": "Build native SwiftUI macOS presentation apps that replace slide decks with live, animated, interactive experiences.",
+  "author": "zsparks",
+  "license": "MIT",
+  "keywords": [
+    "presentation",
+    "swiftui",
+    "macos",
+    "slides",
+    "animation",
+    "interactive"
+  ]
+}
