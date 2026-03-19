@@ -13,14 +13,24 @@ The `/presentation-builder` skill guides Claude through a proven architecture fo
 
 ## Install
 
-Add this plugin to your Claude Code configuration:
-
+**Use as a plugin (local):**
 ```bash
-# Via GitHub (after publishing)
-claude plugin add zsparks/PresentationBuilder
+git clone https://github.com/zacspa/PresentationBuilder.git
+claude --plugin-dir ./PresentationBuilder
+```
 
-# Or test locally during development
-claude --plugin-dir /path/to/PresentationBuilder
+**Or copy the skill into your project:**
+```bash
+mkdir -p .claude/skills/presentation-builder
+curl -o .claude/skills/presentation-builder/SKILL.md \
+  https://raw.githubusercontent.com/zacspa/PresentationBuilder/main/skills/presentation-builder/SKILL.md
+```
+
+**Or install globally for all projects:**
+```bash
+mkdir -p ~/.claude/skills/presentation-builder
+curl -o ~/.claude/skills/presentation-builder/SKILL.md \
+  https://raw.githubusercontent.com/zacspa/PresentationBuilder/main/skills/presentation-builder/SKILL.md
 ```
 
 ## Template
